@@ -1,5 +1,5 @@
 name: Stacked Diffs V2
-on: pull_request
+on: [push ,pull_request]
 jobs: 
   stacked_diff:
    runs-on: ubuntu-latest 
