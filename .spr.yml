@@ -1,0 +1,9 @@
+githubRepoOwner: AbhiMewt
+githubRepoName: stack_diff_demo
+githubHost: github.com
+requireChecks: true
+requireApproval: true
+githubRemote: origin
+githubBranch: master
+remoteBranches: []
+mergeMethod: rebase
