@@ -12,7 +12,7 @@ jobs:
       pip3 install ghstack 
    - name: Push stacked diffs 
      run: | 
-      ghstack env: GITHUB_TOKEN: ${{ github.token }}
+      # ghstack env: GITHUB_TOKEN: ${{ github.token }}
       sh ghstack push --base-branch ${{github.base_ref}} --stack-branch ${{github.head_ref}} 
    - run : echo "action triggered by ${{github.actor}}."
    - name: Check for unmerged dependencies 
