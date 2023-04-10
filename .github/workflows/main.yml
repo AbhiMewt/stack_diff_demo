@@ -1,0 +1,23 @@
+name: Stacked Diffs Check
+on: pull_request
+
+jobs:
+  stacked-diffs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
+
+    - name: Check for unmerged dependencies
+      run: |
+        git remote add upstream https://github.com/${{ github.repository }}.git
+        git fetch upstream
+        git checkout -B base_branch upstream/${{ github.base_ref }}
+        git pull --rebase upstream ${{ github.base_ref }}
+        if git cherry -v upstream/${{ github.base_ref }} | grep -q "$(git rev-parse HEAD)"
+        then
+          echo "There are unmerged dependencies for this pull request."
+          exit 1
+        fi
