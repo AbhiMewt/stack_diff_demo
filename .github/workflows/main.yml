@@ -1,7 +1,7 @@
 name: Stacked Diffs 
 on: pull_request
 jobs: 
-  ghstack:
+  stacked_diff:
    runs-on: ubuntu-latest 
    steps: 
    - uses: actions/checkout@v3 
