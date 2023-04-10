@@ -8,12 +8,22 @@ jobs:
    - name: Install dependencies 
      run: | 
       sudo apt-get update 
-      sudo apt-get install -y python3-pip 
-      pip3 install ghstack 
+      # sudo apt-get install -y python3-pip 
+      # pip3 install ghstack 
+      # sudo curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      # sudo export PATH="$HOME/.cargo/bin:$PATH"
+      # sudo cargo install gh-stack
+      echo "deb [trusted=yes] https://apt.fury.io/inigolabs/ /" | sudo tee /etc/apt/sources.list.d/inigolabs.list
+      sudo apt install spr
+
    - name: Push stacked diffs 
      run: | 
       # ghstack env: GITHUB_TOKEN: ${{ github.token }}
-      sh ghstack push --base-branch ${{github.base_ref}} --stack-branch ${{github.head_ref}} 
+      # sh export GHSTACK_OAUTH_TOKEN='${{ github.token }}'
+      # sh ghstack push --base-branch ${{github.base_ref}} --stack-branch ${{github.head_ref}} 
+      # sh gh-stack annotate '${{github.head_ref}}'
+      # sh gh-stack log '${{github.head_ref}}'
+      sudo git spr update
    - run : echo "action triggered by ${{github.actor}}."
    - name: Check for unmerged dependencies 
      run: | 
