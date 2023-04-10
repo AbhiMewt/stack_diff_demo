@@ -1,4 +1,4 @@
-name: Stacked Diffs 
+name: Stacked Diffs V2
 on: pull_request
 jobs: 
   stacked_diff:
