@@ -1,23 +1,22 @@
-name: Stacked Diffs Check
+name: Stacked Diffs 
 on: pull_request
-
-jobs:
-  stacked-diffs:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.head_ref }}
-
-    - name: Check for unmerged dependencies
-      run: |
-        git remote add upstream https://github.com/${{ github.repository }}.git
-        git fetch upstream
-        git checkout -B base_branch upstream/${{ github.base_ref }}
-        git pull --rebase upstream ${{ github.base_ref }}
-        if git cherry -v upstream/${{ github.base_ref }} | grep -q "$(git rev-parse HEAD)"
-        then
-          echo "There are unmerged dependencies for this pull request."
-          exit 1
-        fi
+jobs: 
+  stacked_diff:
+   runs-on: ubuntu-latest 
+   steps: 
+   - uses: actions/checkout@v3 
+   - name: Install dependencies 
+     run: | 
+      sudo apt-get update 
+      sudo apt-get install -y python3-pip 
+      pip3 install ghstack 
+   - name: Push stacked diffs 
+     run: | 
+      ghstack env: GITHUB_TOKEN: ${{ github.token }}
+      sh ghstack push --base-branch ${{github.base_ref}} --stack-branch ${{github.head_ref}} 
+   - run : echo "action triggered by ${{github.actor}}."
+   - name: Check for unmerged dependencies 
+     run: | 
+      ghstack check --base-branch ${{github.base_ref}} --stack-branch ${{github.head_ref}} 
+        if: ${{ failure() }}
+   - run: echo "🍏 This job's status is ${{ job.status }}."
