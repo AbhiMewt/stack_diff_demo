@@ -17,6 +17,5 @@ jobs:
    - run : echo "action triggered by ${{github.actor}}."
    - name: Check for unmerged dependencies 
      run: | 
-      ghstack check --base-branch ${{github.base_ref}} --stack-branch ${{github.head_ref}} 
-        if: ${{ failure() }}
+      ghstack check --base-branch ${{github.base_ref}} --stack-branch ${{github.head_ref}} if: ${{ failure() }}
    - run: echo "🍏 This job's status is ${{ job.status }}."
